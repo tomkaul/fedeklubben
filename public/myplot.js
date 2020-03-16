@@ -58,9 +58,9 @@ var data = [goal, claus, jacob, manse, thomas];
 var layout = {
   title: {
     text: 'Fedebanden fra Stubben',
-    font: {size: 30}
+    font: {size: 48}
   },
-  font: {size: 18},
+  font: {size: 30},
   xaxis: {
     title: 'Uge nr.',
     range: [11, 31],
