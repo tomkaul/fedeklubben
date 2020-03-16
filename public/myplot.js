@@ -1,38 +1,24 @@
 
-const start_weight = {'Claus': 93.0, 'Jacob': 88.7, 'Manse': 108.2, 'Thomas': 96.4};
 const columns =   ['Claus', 'Jacob', 'Manse', 'Thomas'];
 const weight_data = [
-  [93.0, 88.7, 108.2, 96.4],
-  [93, 88.7, 107.1, 95.0],
+  [93.0, 93],     // Claus
+  [88.7, 88.7],   // Jacob
+  [108.2, 107.1], // Manse
+  [96.4, 95.0],   // Thomas
 ];
-
-function create_table() {
-  var res = "<table>";
-  res += "<tr><th>" + new Date().toISOString().slice(0,10) + " </th><th>Claus</th><th>Jacob</th><th>Manse</th><th>Thomas</th></tr>";
-  // Lav rækker
-  res += " <tr>";
-  res += "  <td>Startvægt (kg)</td>";
-  for(var i = 0; i < columns.length; i++) {
-    res += "  <td>" + weight_data[0][i].toFixed(1) + "</td>";
-  }
-  res += " </tr>";
-  res += " <tr>";
-  res += "  <td>Vægttab (kg)</td>";
-  for(var i = 0; i < columns.length; i++) {
-    res += "  <td>" + (weight_data[0][i] - weight_data[weight_data.length - 1][i]).toFixed(1) + "</td>";
-  }
-  res += " </tr>";  
-  
-  // Afslut tabel
-  res += "</table>";
-
-  // Skriv til hjemmesiden
-  var tab = document.getElementById("myTable");
-  tab.innerHTML = res; 
-}
+const weeks = [11, 12];
+const startWeek = weeks[0];
+// Calculate weight loss
+// var weight_loss = [];
+// for(var i = 0; i < columns.length; i++) {
+//   // weight_loss.push(weight_data[i]);
+//   for(var j = 0; j < weight_data[i].length; j++) {
+//     weight_loss[i][j] = weight_data[i][0] - weight_data[i][j];
+//   }
+// }
 
 var claus = {
-  x: [11, 12],
+  x: weeks,
   y: [0, 0],
   name: 'Claus',
   mode: 'lines+markers',
@@ -41,7 +27,7 @@ var claus = {
 };
 
 var jacob = {
-  x: [11, 12],
+  x: weeks,
   y: [0, 0],
   name: 'Jacob',
   mode: 'lines+markers',
@@ -50,7 +36,7 @@ var jacob = {
 };
 
 var manse = {
-  x: [11, 12],
+  x: weeks,
   y: [0, -1.1],
   name: 'Manse',
   mode: 'lines+markers',
@@ -59,8 +45,9 @@ var manse = {
 };
 
 var thomas = {
-  x: [11, 12],
+  x: weeks,
   y: [0, -1.4],
+  // y: weight_loss[3],
   name: 'Thomas',
   mode: 'lines+markers',
   line: {shape: 'linear', width: 4},
@@ -100,6 +87,45 @@ var layout = {
   }
 };
 
-const myPlot = document.getElementById('myPlot');
-Plotly.newPlot(myPlot, data, layout);	
+function update_page() {
+  var res = "<table>";
+  // Headline
+  res += "<tr><th>" + new Date().toISOString().slice(0,10) + " </th>"
+  for(var i = 0; i < columns.length; i++) {
+    res += "<th>" + columns[i] + "</th>";
+  }
+  res += " </tr>";  
+  // Startvægt
+  res += " <tr>";
+  res += "  <td>Startvægt (kg)</td>";
+  for(var i = 0; i < columns.length; i++) {
+    res += "  <td>" + weight_data[i][0].toFixed(1) + "</td>";
+  }
+  // Nuværende vægt
+  res += " </tr>";
+  res += " <tr>";
+  res += "  <td>Nuv. vægt (kg)</td>";
+  for(var i = 0; i < columns.length; i++) {
+    res += "  <td>" + (weight_data[i][weight_data[i].length - 1]).toFixed(1) + "</td>";
+  }
+  res += " </tr>";  
+  // Vægttab
+  res += " </tr>";
+  res += " <tr>";
+  res += "  <td>Vægttab (kg)</td>";
+  for(var i = 0; i < columns.length; i++) {
+    res += "  <td>" + (weight_data[i][0] - weight_data[i][weight_data[i].length - 1]).toFixed(1) + "</td>";
+  }
+  res += " </tr>";  
+  
+  // Afslut tabel
+  res += "</table>";
 
+  // Lav plot
+  const myPlot = document.getElementById('myPlot');
+  Plotly.newPlot(myPlot, data, layout);	
+
+  // Skriv tabel til hjemmesiden
+  var tab = document.getElementById("myTable");
+  tab.innerHTML = res;  
+}
