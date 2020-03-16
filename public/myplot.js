@@ -1,10 +1,35 @@
 
 const start_weight = {'Claus': 93.0, 'Jacob': 88.7, 'Manse': 108.2, 'Thomas': 96.4};
+const columns =   ['Claus', 'Jacob', 'Manse', 'Thomas'];
 const weight_data = [
-  ['Claus', 'Jacob', 'Manse', 'Thomas'],
   [93.0, 88.7, 108.2, 96.4],
-  [, , 107.1, 95.0],
+  [93, 88.7, 107.1, 95.0],
 ];
+
+function create_table() {
+  var res = "<table>";
+  res += "<tr><th>" + new Date().toISOString().slice(0,10) + " </th><th>Claus</th><th>Jacob</th><th>Manse</th><th>Thomas</th></tr>";
+  // Lav rækker
+  res += " <tr>";
+  res += "  <td>Startvægt (kg)</td>";
+  for(var i = 0; i < columns.length; i++) {
+    res += "  <td>" + weight_data[0][i].toFixed(1) + "</td>";
+  }
+  res += " </tr>";
+  res += " <tr>";
+  res += "  <td>Vægttab (kg)</td>";
+  for(var i = 0; i < columns.length; i++) {
+    res += "  <td>" + (weight_data[0][i] - weight_data[weight_data.length - 1][i]).toFixed(1) + "</td>";
+  }
+  res += " </tr>";  
+  
+  // Afslut tabel
+  res += "</table>";
+
+  // Skriv til hjemmesiden
+  var tab = document.getElementById("myTable");
+  tab.innerHTML = res; 
+}
 
 var claus = {
   x: [11, 12],
@@ -75,5 +100,6 @@ var layout = {
   }
 };
 
-const myDiv = document.getElementById('myDiv');
-Plotly.newPlot(myDiv, data, layout);	
+const myPlot = document.getElementById('myPlot');
+Plotly.newPlot(myPlot, data, layout);	
+

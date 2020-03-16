@@ -3,11 +3,24 @@
 <head>
 	<meta charset='utf8'>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    table  {
+      border: 4px solid black;
+    }
+    th, td  {
+      font-family: verdana;
+      font-size: 30px;
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+  </style>
 </head>
 
-<body>
-  <div id="myDiv" style="width:900px;height:800px;"></div>
-  <!-- <div id="myDiv" style="width:600px"></div> -->
+<body onload="create_table()">
+  <div id="myPlot" style="width:900px;height:800px;"></div>
+  <br><br><br>
+  <div id="myTable" style="width:900px;height:800px;"></div>
 </body>
 <script type="text/javascript" src="myplot.js"></script>
 </html>
