@@ -11,7 +11,7 @@ var claus = {
   y: [0, -1],
   name: 'Claus',
   mode: 'lines+markers',
-  line: {shape: 'linear'},
+  line: {shape: 'linear', width: 4},
   type: 'scatter'
 };
 
@@ -20,7 +20,7 @@ var jacob = {
   y: [0, -2],
   name: 'Jacob',
   mode: 'lines+markers',
-  line: {shape: 'linear'},
+  line: {shape: 'linear', width: 4},
   type: 'scatter'
 };
 
@@ -29,7 +29,7 @@ var manse = {
   y: [0, -0.3],
   name: 'Manse',
   mode: 'lines+markers',
-  line: {shape: 'linear'},
+  line: {shape: 'linear', width: 4},
   type: 'scatter'
 };
 
@@ -38,7 +38,7 @@ var thomas = {
   y: [0, -1.4],
   name: 'Thomas',
   mode: 'lines+markers',
-  line: {shape: 'linear'},
+  line: {shape: 'linear', width: 4},
   type: 'scatter'
 };
 
@@ -49,7 +49,7 @@ var goal = {
   mode: 'lines',
   line: {
     dash: 'dot',
-    width: 2
+    width: 4
   }
 };
 
@@ -60,15 +60,18 @@ var layout = {
     text: 'Fedebanden fra Stubben',
     font: {size: 30}
   },
+  font: {size: 18},
   xaxis: {
     title: 'Uge nr.',
     range: [11, 31],
     showgrid: true,
-    zeroline: true
+    zeroline: true,
+    linewidth: 3
   },
   yaxis: {
     title: 'Vægttab (kg)',
-    showline: true
+    showline: true,
+    linewidth: 3
   }
 };
 
