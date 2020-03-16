@@ -3,12 +3,12 @@ const start_weight = {'Claus': 93.0, 'Jacob': 88.7, 'Manse': 108.2, 'Thomas': 96
 const weight_data = [
   ['Claus', 'Jacob', 'Manse', 'Thomas'],
   [93.0, 88.7, 108.2, 96.4],
-  [92.0, 86.7, 108.0, 95.0],
+  [, , 107.1, 95.0],
 ];
 
 var claus = {
   x: [11, 12],
-  y: [0, -1],
+  y: [0, 0],
   name: 'Claus',
   mode: 'lines+markers',
   line: {shape: 'linear', width: 4},
@@ -17,7 +17,7 @@ var claus = {
 
 var jacob = {
   x: [11, 12],
-  y: [0, -2],
+  y: [0, 0],
   name: 'Jacob',
   mode: 'lines+markers',
   line: {shape: 'linear', width: 4},
@@ -26,7 +26,7 @@ var jacob = {
 
 var manse = {
   x: [11, 12],
-  y: [0, -0.3],
+  y: [0, -1.1],
   name: 'Manse',
   mode: 'lines+markers',
   line: {shape: 'linear', width: 4},
