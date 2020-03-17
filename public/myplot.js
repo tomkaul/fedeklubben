@@ -1,7 +1,7 @@
 // Prepare weight data
 const columns =   ['Claus', 'Jacob', 'Manse', 'Thomas'];
 const weight_data = [
-  [93.0, 92.5],     // Claus
+  [93.3, 92.5],     // Claus
   [88.7, 87.3],     // Jacob
   [108.2, 107.1],   // Manse
   [96.4, 95.0],     // Thomas
