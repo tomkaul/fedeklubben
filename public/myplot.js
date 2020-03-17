@@ -38,7 +38,7 @@ function update_plot() {
   var options = {
     theme: "light2",
     title:{
-      text: "Fedeklubben fra Stubben"
+      text: "Fedeklubben Stubben"
     },
     axisX:{
         title: "Uge nr.",
