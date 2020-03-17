@@ -1,134 +1,148 @@
-// Prepare weight data
-const columns =   ['Claus', 'Jacob', 'Manse', 'Thomas'];
-const weight_data = [
-  [93.3, 92.5],     // Claus
-  [88.7, 87.3],     // Jacob
-  [108.2, 107.1],   // Manse
-  [96.4, 95.0],     // Thomas
-];
-const weeks = [11, 12];
-const startWeek = weeks[0];
-// Calculate weight loss
-var weight_loss = [...weight_data];
-for(var i = 0; i < columns.length; i++) {
-  weight_loss[i] = [...weight_data[i]];
-  for(var j = 0; j < weight_data[i].length; j++) {
-    weight_loss[i][j] = (weight_data[i][j] - weight_data[i][0]).toFixed(1);
-  }
-}
+// Weight data
+const dataPointsAll = {
+  'Claus': {start_weight: 93.3,
+    data: [
+    { x: 11, y: 0 },
+    { x: 12, y: -0.5 },
+  ]},
+  'Jacob': {start_weight: 88.7,
+    data: [
+    { x: 11, y: 0 },
+    { x: 12, y: -1.4 },
+  ]},
+  'Manse': {start_weight: 108.2,
+    data: [
+    { x: 11, y: 0 },
+    { x: 12, y: -1.1 },
+  ]},
+  'Thomas': {start_weight: 96.4,
+    data: [
+    { x: 11, y: 0 },
+    { x: 12, y: -1.4 },
+  ]},
+};
+// Misc function
+function get_current_weight(key) {
+  return (dataPointsAll[key].start_weight + dataPointsAll[key].data[dataPointsAll[key].data.length-1].y).toFixed(1);
+};
+function get_start_weight(key) {
+  return dataPointsAll[key].start_weight.toFixed(1);
+};
+function get_weight_loss(key) {
+  return -dataPointsAll[key].data[dataPointsAll[key].data.length-1].y.toFixed(1);
+};
 
 // Update the plot
 function update_plot() {
-  var claus = {
-    x: weeks,
-    y: weight_loss[0],
-    name: 'Claus',
-    mode: 'lines+markers',
-    line: {shape: 'linear', width: 4},
-    type: 'scatter'
-  };
-
-  var jacob = {
-    x: weeks,
-    y: weight_loss[1],
-    name: 'Jacob',
-    mode: 'lines+markers',
-    line: {shape: 'linear', width: 4},
-    type: 'scatter'
-  };
-
-  var manse = {
-    x: weeks,
-    y: weight_loss[2],
-    name: 'Manse',
-    mode: 'lines+markers',
-    line: {shape: 'linear', width: 4},
-    type: 'scatter'
-  };
-
-  var thomas = {
-    x: weeks,
-    y: weight_loss[3],
-    name: 'Thomas',
-    mode: 'lines+markers',
-    line: {shape: 'linear', width: 4},
-    type: 'scatter'
-  };
-
-  var goal = {
-    x: [11, 31],
-    y: [0, -10],
-    name: 'Mål',
-    mode: 'lines',
-    line: {
-      dash: 'dot',
-      width: 4
-    }
-  };
-
-  var data = [goal, claus, jacob, manse, thomas];
-
-  var layout = {
-    title: {
-      text: 'Fedebanden fra Stubben',
-      font: {size: 48}
+// window.onload = function () {
+  var options = {
+    theme: "light2",
+    title:{
+      text: "Fedeklubben fra Stubben"
     },
-    font: {size: 30},
-    xaxis: {
-      title: 'Uge nr.',
-      range: [11, 31],
-      showgrid: true,
-      zeroline: true,
-      linewidth: 3
+    axisX:{
+        title: "Uge nr.",
+        minimum: 11
+      // valueFormatString: "DD MMM"
     },
-    yaxis: {
-      title: 'Vægt-diff (kg)',
-      showline: true,
-      linewidth: 3
-    }
+    axisY: {
+      title: "Vægt diff (kg)",
+      //minimum: 30
+    },
+    legend:{
+      // cursor:"pointer",
+      verticalAlign: "bottom",
+      horizontalAlign: "left",
+      dockInsidePlotArea: true,
+      // itemclick: toogleDataSeries
+    },
+    data: [
+      {
+      type: "line",
+      showInLegend: true,
+      name: "Claus",
+      //color: "#F08080",
+      dataPoints: dataPointsAll['Claus'].data
+      },
+      {
+        type: "line",
+        showInLegend: true,
+        name: "Jacob",
+        //color: "#F08080",
+        dataPoints: dataPointsAll['Jacob'].data
+      },
+      {
+        type: "line",
+        showInLegend: true,
+        name: "Manse",
+        //color: "#F08080",
+        dataPoints: dataPointsAll['Manse'].data
+      },
+      {
+        type: "line",
+        showInLegend: true,
+        name: "Thomas",
+        //color: "#F08080",
+        dataPoints: dataPointsAll['Thomas'].data
+      },
+      {
+        type: "line",
+        showInLegend: true,
+        name: "Mål",
+        lineDashType: "dash",
+        dataPoints: [
+          { x: 11, y: 0 },
+          { x: 31, y: -10 }
+        ]
+      },
+    ]
+    };
+  $("#chartContainer").CanvasJSChart(options);
   };
-
-  // Lav plot
-  const myPlot = document.getElementById('myPlot');
-  Plotly.newPlot(myPlot, data, layout);	
-};
 
 // Create a table containing primary data
 function update_table() {
-  var res = "<table>";
+  var res = '<table class="table table-striped">';
   // Headline
-  res += "<tr><th>" + new Date().toISOString().slice(0,10) + " </th>"
-  for(var i = 0; i < columns.length; i++) {
-    res += "<th>" + columns[i] + "</th>";
-  }
-  res += " </tr>";  
+  res += "<thead class='thead-dark'><tr>><th>" + new Date().toISOString().slice(0,10) + " </th>"
+  Object.keys(dataPointsAll).forEach(function(key) {
+    res += "<th>" + key + "</th>";
+  });
+  res += " </tr></thead><tbody>";  
   // Startvægt
   res += " <tr>";
   res += "  <td>Startvægt (kg)</td>";
-  for(var i = 0; i < columns.length; i++) {
-    res += "  <td>" + weight_data[i][0].toFixed(1) + "</td>";
-  }
+  Object.keys(dataPointsAll).forEach(function(key) {
+    res += "  <td>" + get_start_weight(key)  + "</td>";
+  });
+  res += " </tr>";  
+
   // Nuværende vægt
   res += " </tr>";
   res += " <tr>";
   res += "  <td>Nuv. vægt (kg)</td>";
-  for(var i = 0; i < columns.length; i++) {
-    res += "  <td>" + (weight_data[i][weight_data[i].length - 1]).toFixed(1) + "</td>";
-  }
+  Object.keys(dataPointsAll).forEach(function(key) {
+    res += "  <td>" + get_current_weight(key) + "</td>";
+  });
   res += " </tr>";  
   // Vægttab
   res += " </tr>";
-  res += " <tr>";
+  res += " <tr class='table-success'>";
   res += "  <td>Vægttab (kg)</td>";
-  for(var i = 0; i < columns.length; i++) {
-    res += "  <td>" + (-weight_loss[i][weight_data[i].length - 1]) + "</td>";
-  }
+  Object.keys(dataPointsAll).forEach(function(key) {
+    res += "  <td>" + get_weight_loss(key) + "</td>";
+  });
   res += " </tr>";  
   
   // Afslut tabel
-  res += "</table>";
+  res += "</tbody></table>";
+
+  // // Test
+  // Object.keys(dataPointsAll).forEach(function(key) {
+  //   console.log(key);
+  // });
 
   // Skriv tabel til hjemmesiden
-  var tab = document.getElementById("myTable");
+  var tab = document.getElementById("tableContainer");
   tab.innerHTML = res;  
 }
