@@ -1,4 +1,4 @@
 #!bash
 git add .
-git commit -m "Added data"
+git commit -m "Updated image data"
 git push -u origin master
